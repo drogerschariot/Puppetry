@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
 
    config.vm.define :puppetm do |puppetm|
 	puppetm.vm.box 		= "ubuntu-server-x64"
-	puppetm.vm.box_url	= "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-1204-x64-vbox4210.box"
+	puppetm.vm.box_url	= "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-10044-x64-vbox4210.box"
 	puppetm.vm.hostname 	= "puppet-master"
 	puppetm.vm.network :private_network, ip: "192.168.100.100"
    end
@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
 
    config.vm.define :puppetc4 do |puppetc4|
         puppetc4.vm.box         = "ubuntu-server-x64"
-        puppetc4.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/fedora-18-x64-vbox4210.box"
+        puppetc4.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-10044-x64-vbox4210.box"
         puppetc4.vm.hostname    = "puppet-client4"
         puppetc4.vm.network :private_network, ip: "192.168.100.104"
    end
