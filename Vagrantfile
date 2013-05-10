@@ -24,12 +24,12 @@ Vagrant.configure("2") do |config|
 	puppetc2.vm.network :private_network, ip: "192.168.100.102"
    end
 
-   config.vm.define :puppetc3 do |puppetc3|
-	puppetc3.vm.box		= "fedora-18-x64"
-	puppetc3.vm.box_url	= "http://puppet-vagrant-boxes.puppetlabs.com/fedora-18-x64-vbox4210.box"
-	puppetc3.vm.hostname	= "puppet-client3"
-	puppetc3.vm.network :private_network, ip: "192.168.100.103"
-   end
+   #config.vm.define :puppetc3 do |puppetc3|
+   #	puppetc3.vm.box		= "fedora-18-x64"
+   #	puppetc3.vm.box_url	= "http://puppet-vagrant-boxes.puppetlabs.com/fedora-18-x64-vbox4210.box"
+   #	puppetc3.vm.hostname	= "puppet-client3"
+   #	puppetc3.vm.network :private_network, ip: "192.168.100.103"
+   #end
 
    config.vm.define :puppetc4 do |puppetc4|
         puppetc4.vm.box         = "ubuntu-server-x64"
