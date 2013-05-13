@@ -8,7 +8,7 @@
 #
 #
 
-$hosts = "192.168.100.100 puppetmaster puppetmaster.chariotsolutions.com
+$hosts = "192.168.100.100 puppet-master puppet-master.chariotsolutions.com
 192.168.100.101 puppet-client1 puppet-client1.chariotsolutions.com
 192.168.100.102 puppet-client2 puppet-client2.chariotsolutions.com
 192.168.100.103 puppet-client3 puppet-client3.chariotsolutions.com
