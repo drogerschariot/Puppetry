@@ -3,39 +3,40 @@
 
 Vagrant.configure("2") do |config|
 
-   config.vm.define :puppet-master do |puppet-master|
-        puppet-master.vm.box          = "ubuntu-server-12.04.2"
-        puppet-master.vm.box_url      = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
-        puppet-master.vm.hostname     = "puppet-master"
-        puppet-master.vm.network :private_network, ip: "192.168.100.100"
+   config.vm.define :puppetmaster do |puppetmaster|
+        puppetmaster.vm.box          = "ubuntu-server-12.04.2"
+        puppetmaster.vm.box_url      = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
+        puppetmaster.vm.hostname     = "puppetmaster"
+        puppetmaster.vm.network :private_network, ip: "192.168.100.100"
    end
 
-   config.vm.define :puppet-client1 do |puppet-client1|
-        puppet-client1.vm.box         = "debian-7"
-        puppet-client1.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/debian-70rc1-x64-vbox4210.box"
-        puppet-client1.vm.hostname    = "puppet-client1"
-        puppet-client1.vm.network :private_network, ip: "192.168.100.101"
+   config.vm.define :puppetclient1 do |puppetclient1|
+        puppetclient1.vm.box         = "debian-7"
+        puppetclient1.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/debian-70rc1-x64-vbox4210.box"
+        puppetclient1.vm.hostname    = "puppetclient1"
+        puppetclient1.vm.network :private_network, ip: "192.168.100.101"
    end
 
-   config.vm.define :puppet-client2 do |puppet-client2|
-        puppet-client2.vm.box         = "centos-6.4"
-        puppet-client2.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
-        puppet-client2.vm.hostname    = "puppet-client2"
-        puppet-client2.vm.network :private_network, ip: "192.168.100.102"
+   config.vm.define :puppetclient2 do |puppetclient2|
+        puppetclient2.vm.box         = "centos-6.4"
+        puppetclient2.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
+				       "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
+        puppetclient2.vm.hostname    = "puppetclient2"
+        puppetclient2.vm.network :private_network, ip: "192.168.100.102"
    end
 
-   config.vm.define :puppet-client3 do |puppet-client3|
-        puppet-client3.vm.box         = "ubuntu-server-12.04.2"
-        puppet-client3.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
-        puppet-client3.vm.hostname    = "puppet-client3"
-        puppet-client3.vm.network :private_network, ip: "192.168.100.103"
+   config.vm.define :puppetclient3 do |puppetclient3|
+        puppetclient3.vm.box         = "ubuntu-server-12.04.2"
+        puppetclient3.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
+        puppetclient3.vm.hostname    = "puppetclient3"
+        puppetclient3.vm.network :private_network, ip: "192.168.100.103"
    end
 
-   #config.vm.define :puppet-client4 do |ppuppet-client4|
-   #    ppuppet-client4.vm.box         = "fedora-18-x64"
-   #    ppuppet-client4.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/fedora-18-x64-vbox4210.box"
-   #    ppuppet-client4.vm.hostname    = "puppet-client3"
-   #    ppuppet-client4.vm.network :private_network, ip: "192.168.100.104"
+   #config.vm.define :puppetclient4 do |ppuppetclient4|
+   #    ppuppetclient4.vm.box         = "fedora-18-x64"
+   #    ppuppetclient4.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/fedora-18-x64-vbox4210.box"
+   #    ppuppetclient4.vm.hostname    = "puppetclient3"
+   #    ppuppetclient4.vm.network :private_network, ip: "192.168.100.104"
    #end
 
 
