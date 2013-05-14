@@ -10,11 +10,11 @@
 
 $DOMAIN = "chariotsolutions.com"
 
-$hosts = "192.168.100.100 puppet-master puppet-master.${DOMAIN}
-192.168.100.101 puppet-client1 puppet-client1.${DOMAIN}
-192.168.100.102 puppet-client2 puppet-client2.${DOMAIN}
-192.168.100.103 puppet-client3 puppet-client3.${DOMAIN}
-192.168.100.104 puppet-client4 puppet-client4.${DOMAIN}
+$hosts = "192.168.100.100 puppetmaster puppetmaster.${DOMAIN}
+192.168.100.101 puppetclient1 puppetclient1.${DOMAIN}
+192.168.100.102 puppetclient2 puppetclient2.${DOMAIN}
+192.168.100.103 puppetclient3 puppetclient3.${DOMAIN}
+192.168.100.104 puppetclient4 puppetclient4.${DOMAIN}
 "
 
 case $operatingsystem {
@@ -31,7 +31,6 @@ case $operatingsystem {
 			exec { "apt_update":
 			        command         => "apt-get update",
 			        path            => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
-			        before          => Package[ "vim", "puppet", "puppetmaster" ],
 			}
 		}
 		CentOS, Fedora, RedHat: {
@@ -45,7 +44,7 @@ case $operatingsystem {
 				path 	=> "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
 			}
 		}
-	}
+}
 
 package { "vim":
 	name 		=> $vim,
@@ -63,13 +62,43 @@ file { "/etc/sudoers":
 	group  		=> 'root',
 }
 
+# Addes puppetmaster and all client FQDN to all hosts.
 file { "/etc/hosts":
 	ensure		=> file,
 	content		=> "${hosts}",
 }
 
-if $fqdn == "puppet-master.${DOMAIN}" {
+# If the VM is the puppetmaster, install puppetmaster packages and files.
+if $fqdn == "puppetmaster.${DOMAIN}" {
 	package { "puppetmaster":
-		ensure => present,
+		ensure 	=> present,
+		require	=> $osfamily ? {
+			'Debain' => "Exec[ 'apt_update' ]",
+			default	 => undef,
+		},
+	}
+	file { "/etc/puppet/autosign.conf":
+		ensure	=> present,
+		mode	=> '755',
+		owner	=> 'root',
+		group	=> 'root',
+		require	=> Package[ 'puppetmaster' ],
+		content	=> "*.${DOMAIN}",
+	}
+	service { 'puppetmaster':
+		enable 		=> true,
+		ensure		=> running,
+		hasrestart 	=> true,
+		hasstatus 	=> true,
+		require 	=> Package[ 'puppetmaster' ],
+		subscribe       => File[ "/etc/puppet/autosign.conf" ],
+	}
+}
+# If puppet client, connect to puppetmaster once to create key pair.
+else {
+	exec { 'puppetclient':
+		command		=> "puppet agent --server puppetmaster.${DOMAIN} --test",
+		path		=> '/usr/bin:/usr/sbin:/bin:/sbin:/user/local/bin',
+		require		=> Package [ 'puppet' ],
 	}
 }
