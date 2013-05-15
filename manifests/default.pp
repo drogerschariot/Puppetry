@@ -1,13 +1,9 @@
 #
-# Default base config and packages for Vagrant
+# Puppetry
 #
-# Base Packages:
-#	-- vim
-#	-- puppet
-#	-- build-essensials
-#
-#
+# Installs puppetmaster and puppet dependencies on vagrant instances. 
 
+# Change to your domain
 $DOMAIN = "chariotsolutions.com"
 
 $hosts = "192.168.100.100 puppetmaster puppetmaster.${DOMAIN}
@@ -17,13 +13,10 @@ $hosts = "192.168.100.100 puppetmaster puppetmaster.${DOMAIN}
 192.168.100.104 puppetclient4 puppetclient4.${DOMAIN}
 "
 
+# Get some distro specific names and packages. 
 case $operatingsystem {
 		Ubuntu, debian: {
-			
-			# Distro specific variables 
 			$vim = "vim"
-
-			# Distro specific Types
 			package { "build-essential":
 				ensure 	=> present,
 				require	=> Exec [ "apt_update" ],
@@ -34,11 +27,7 @@ case $operatingsystem {
 			}
 		}
 		CentOS, Fedora, RedHat: {
-
-			# Distro specific variables
 			$vim = "vim-common"
-
-			# Distro specific Types
 			exec { "build-essential":
 				command => "yum -y groupinstall \"Development Tools\"",
 				path 	=> "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
@@ -46,6 +35,7 @@ case $operatingsystem {
 		}
 }
 
+# Sorry I like vim :)
 package { "vim":
 	name 		=> $vim,
 	ensure 		=> present,
@@ -72,13 +62,14 @@ file { "/etc/hosts":
 if $fqdn == "puppetmaster.${DOMAIN}" {
 	package { "puppetmaster":
 		ensure 	=> present,
-		require	=> $osfamily ? {
+		require	=> $osfamily ? { # If debain family, make sure apt-update runs
 			'Debain' => "Exec[ 'apt_update' ]",
 			default	 => undef,
 		},
 	}
+	# Define auto signing to all client machines.
 	file { "/etc/puppet/autosign.conf":
-		ensure	=> present,
+		ensure	=> file,
 		mode	=> '755',
 		owner	=> 'root',
 		group	=> 'root',

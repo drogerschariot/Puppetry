@@ -1,5 +1,6 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+# Puppetry 
+#
+# If you want to remove a client, simply comment out the define block.
 
 Vagrant.configure("2") do |config|
 
@@ -32,10 +33,11 @@ Vagrant.configure("2") do |config|
         puppetclient3.vm.network :private_network, ip: "192.168.100.103"
    end
 
+   # Note that vagrant has a bug with the Fedora Template that will be fixed soon.
    #config.vm.define :puppetclient4 do |ppuppetclient4|
-   #    ppuppetclient4.vm.box         = "fedora-18-x64"
+   #    ppuppetclient4.vm.box         = "fedora-18"
    #    ppuppetclient4.vm.box_url     = "http://puppet-vagrant-boxes.puppetlabs.com/fedora-18-x64-vbox4210.box"
-   #    ppuppetclient4.vm.hostname    = "puppetclient3"
+   #    ppuppetclient4.vm.hostname    = "puppetclient4"
    #    ppuppetclient4.vm.network :private_network, ip: "192.168.100.104"
    #end
 
