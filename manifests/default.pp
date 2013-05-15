@@ -88,10 +88,11 @@ if $fqdn == "puppetmaster.${DOMAIN}" {
 	service { 'puppetmaster':
 		enable 		=> true,
 		ensure		=> running,
-		hasrestart 	=> true,
-		hasstatus 	=> true,
-		require 	=> Package[ 'puppetmaster' ],
-		subscribe       => File[ "/etc/puppet/autosign.conf" ],
+		require 	=> [ 
+					Package[ 'puppetmaster' ], 
+					File[ '/etc/hosts' ],
+					File[ '/etc/puppet/autosign.conf' ],
+				   ],
 	}
 }
 # If puppet client, connect to puppetmaster once to create key pair.
