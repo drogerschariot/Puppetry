@@ -1,7 +1,7 @@
 Puppetry
 =================
 
-Create a diverse puppetmaster test environment in minutes and start testing manifests right out of the box.
+Create a diverse puppetmaster test environment in minutes.
 
 PuppetMaster:   Ubuntu Server 12.04
 Puppet Client1:	Debain 6
@@ -10,12 +10,11 @@ Puppet Client3:	Ubuntu Server 12.04
 
 Install
 ==================
-- clone repo to you test machine
-- cd into repo
+- git clone https://github.com/drogerschariot/Puppetry.git
+- cd Puppetry
 - vagrant up
-- done
 
-All clients will already be signed by the master, so you can start testing manifests straight away.
+All clients will already be signed by the master out of the box so you can start testing manifests straight away.
 
 Contrib
 ===================
