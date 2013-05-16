@@ -24,6 +24,7 @@ case $operatingsystem {
 			exec { "apt_update":
 			        command         => "apt-get update",
 			        path            => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+				before		=> Package[ 'vim', 'git', 'puppet' ],
 			}
 		}
 		CentOS, Fedora, RedHat: {
