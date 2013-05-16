@@ -40,24 +40,23 @@ package { "vim":
 	name 		=> $vim,
 	ensure 		=> present,
 }
-
+package { 'git':
+	ensure		=> present,
+}
 package { "puppet":
 	ensure 		=> present,
 }
-
 file { "/etc/sudoers":
 	ensure 		=> file,
 	mode   		=> 0440,
 	owner  		=> 'root',
 	group  		=> 'root',
 }
-
 # Addes puppetmaster and all client FQDN to all hosts.
 file { "/etc/hosts":
 	ensure		=> file,
 	content		=> "${hosts}",
 }
-
 # If the VM is the puppetmaster, install puppetmaster packages and files.
 if $fqdn == "puppetmaster.${DOMAIN}" {
 	package { "puppetmaster":
