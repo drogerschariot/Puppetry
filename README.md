@@ -1,7 +1,7 @@
 Puppetry
 =================
 
-Create a diverse puppetmaster test environment in minutes.
+Create a diverse puppetmaster test environment in minutes using Vagrant.
 
 
 Install
