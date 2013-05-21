@@ -7,7 +7,7 @@ Create a diverse puppetmaster test environment in minutes using Vagrant.
 ###Install
 - git clone https://github.com/drogerschariot/Puppetry.git
 - cd Puppetry
-- In manifests/default.pp, change the $DOAMIN variable to your domain
+- In manifests/default.pp, change the $DOMAIN variable to your domain
 - vagrant up
 
 All clients will already be signed by the master out of the box so you can start testing manifests straight away.
