@@ -7,6 +7,7 @@ Create a diverse puppetmaster test environment in minutes using Vagrant.
 ###Install
 - git clone https://github.com/drogerschariot/Puppetry.git
 - cd Puppetry
+- in manifests/default.pp, change the DOAMIN variable to your domain
 - vagrant up
 
 All clients will already be signed by the master out of the box so you can start testing manifests straight away.
@@ -23,7 +24,7 @@ Hostnames:<br />
 <b>puppetclient2</b>:	CentOS 6.4          <br />
 <b>puppetclient3</b>:	Ubuntu Server 12.04 <br />
 
-
+You can also ssh to the puppetmaster guest from a remote computer via port 2222 on the host.
 
 ###Contrib
 Fork and request.
