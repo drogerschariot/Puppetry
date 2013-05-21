@@ -4,7 +4,7 @@
 # Installs puppetmaster and puppet dependencies on vagrant instances. 
 
 # Change to your domain
-$DOMAIN = "change.me"
+$DOMAIN = "chariotsolutions.com"
 
 $hosts = "192.168.100.100 puppetmaster puppetmaster.${DOMAIN}
 192.168.100.101 puppetclient1 puppetclient1.${DOMAIN}
