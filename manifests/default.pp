@@ -87,10 +87,10 @@ if $fqdn == "puppetmaster.${DOMAIN}" {
 	}
 }
 # If puppet client, connect to puppetmaster once to create key pair.
-else {
-	exec { 'puppetclient':
-		command		=> "puppet agent --server puppetmaster.${DOMAIN} --test",
-		path		=> '/usr/bin:/usr/sbin:/bin:/sbin:/user/local/bin',
-		require		=> Package [ 'puppet' ],
-	}
-}
+#else {
+#	exec { 'puppetclient':
+#		command		=> "puppet agent --server puppetmaster.${DOMAIN} --test",
+#		path		=> '/usr/bin:/usr/sbin:/bin:/sbin:/user/local/bin',
+#		require		=> Package [ 'puppet' ],
+#	}
+#}
