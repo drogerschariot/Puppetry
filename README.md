@@ -1,7 +1,8 @@
 Puppetry
 =================
 
-Create a diverse puppet test environment in minutes using Vagrant.
+Create a diverse puppet test environment in minutes using Vagrant. Puppetry will spin off 1 puppetmaster and 3 
+clients with 1 command.
 
 
 ###Install
