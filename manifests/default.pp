@@ -22,8 +22,8 @@ case $operatingsystem {
 				require	=> Exec [ "apt_update" ],
 			}
 			exec { "apt_update":
-			        command         => "apt-get update",
-			        path            => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+			    command         => "apt-get update",
+			    path            => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
 				before		=> Package[ 'vim', 'git', 'puppet' ],
 			}
 		}
@@ -58,6 +58,11 @@ file { "/etc/hosts":
 	ensure		=> file,
 	content		=> "${hosts}",
 }
+
+exec { '/etc/resolve.conf':
+	command		=> "echo -e 'search ${DOMAIN}\ndomain ${DOMAIN}' >> /etc/resolv.conf"
+	path 		=> "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+}
 # If the VM is the puppetmaster, install puppetmaster packages and files.
 if $fqdn == "puppetmaster.${DOMAIN}" {
 	package { "puppetmaster":
@@ -86,11 +91,11 @@ if $fqdn == "puppetmaster.${DOMAIN}" {
 				   ],
 	}
 }
-# If puppet client, connect to puppetmaster once to create key pair.
-#else {
-#	exec { 'puppetclient':
-#		command		=> "puppet agent --server puppetmaster.${DOMAIN} --test",
-#		path		=> '/usr/bin:/usr/sbin:/bin:/sbin:/user/local/bin',
-#		require		=> Package [ 'puppet' ],
-#	}
-#}
+ If puppet client, connect to puppetmaster once to create key pair.
+else {
+	exec { 'puppetclient':
+		command		=> "puppet agent --server puppetmaster.${DOMAIN} --test",
+		path		=> '/usr/bin:/usr/sbin:/bin:/sbin:/user/local/bin',
+		require		=> [ Package [ 'puppet' ], File[ '/etc/hosts' ], Exec[ '/etc/resolve.conf' ] ],
+	}
+}
