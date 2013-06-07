@@ -1,7 +1,7 @@
 Puppetry
 =================
 
-Create a diverse puppet test environment in minutes using Vagrant. Puppetry will spin off 1 puppetmaster and 3 
+Create a diverse puppet test environment in minutes using Vagrant. Puppetry will spin off 1 puppetmaster and 4 
 clients with 1 command.
 
 
@@ -24,6 +24,7 @@ Hostnames:<br />
 <b>puppetclient1</b>:  Debain 6            <br />
 <b>puppetclient2</b>:	CentOS 6.4          <br />
 <b>puppetclient3</b>:	Ubuntu Server 12.04 <br />
+<b>puppetclient3</b>:  Fedora 17 <br />
 
 You can also ssh to the puppetmaster guest from a remote computer via port 2222 on the host.
 
