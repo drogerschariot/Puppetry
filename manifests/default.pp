@@ -4,7 +4,7 @@
 # Installs puppetmaster and puppet dependencies on vagrant instances. 
 
 # Change to your domain
-$DOMAIN = "change.me"
+$DOMAIN = "chariotsolutions.com"
 
 $hosts = "192.168.100.100 puppetmaster puppetmaster.${DOMAIN}
 192.168.100.101 puppetclient1 puppetclient1.${DOMAIN}
@@ -60,17 +60,14 @@ file { "/etc/hosts":
 }
 
 exec { '/etc/resolve.conf':
-	command		=> "echo -e 'search ${DOMAIN}\ndomain ${DOMAIN}' >> /etc/resolv.conf"
+	command		=> "echo -e 'search ${DOMAIN}\ndomain ${DOMAIN}' >> /etc/resolv.conf",
 	path 		=> "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
 }
 # If the VM is the puppetmaster, install puppetmaster packages and files.
-if $fqdn == "puppetmaster.${DOMAIN}" {
+if $hostname == "puppetmaster" {
 	package { "puppetmaster":
 		ensure 	=> present,
-		require	=> $osfamily ? { # If debain family, make sure apt-update runs
-			'Debain' => "Exec[ 'apt_update' ]",
-			default	 => undef,
-		},
+		require	=> [ File[ '/etc/hosts' ],  Exec[ '/etc/resolve.conf' ], ]
 	}
 	# Define auto signing to all client machines.
 	file { "/etc/puppet/autosign.conf":
@@ -91,7 +88,7 @@ if $fqdn == "puppetmaster.${DOMAIN}" {
 				   ],
 	}
 }
- If puppet client, connect to puppetmaster once to create key pair.
+ #If puppet client, connect to puppetmaster once to create key pair.
 else {
 	exec { 'puppetclient':
 		command		=> "puppet agent --server puppetmaster.${DOMAIN} --test",

@@ -36,6 +36,7 @@ Vagrant.configure("2") do |config|
 	puppetclient3.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2203
    end
 
+<<<<<<< HEAD
  #  config.vm.define :puppetclient4 do |puppetclient4|
  #      puppetclient4.vm.box         = "fedora-17"
  #      puppetclient4.vm.box_url    = "http://office.chariotsolutions.com:8067/boxes/fedora-17-x64.box"
@@ -43,6 +44,15 @@ Vagrant.configure("2") do |config|
  #      puppetclient4.vm.network :private_network, ip: "192.168.100.104"
  #      puppetclient4.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2204
  #  end
+=======
+   config.vm.define :puppetclient4 do |puppetclient4|
+       puppetclient4.vm.box         = "fedora-18"
+       puppetclient4.vm.box_url    = "http://office.chariotsolutions.com:8067/boxes/fedora-17-x64.box"
+       #puppetclient4.vm.hostname    = "puppetclient4"
+       puppetclient4.vm.network :private_network, ip: "192.168.100.104"
+       puppetclient4.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2204
+   end
+>>>>>>> fedora18
 
    config.vm.provision :puppet
 
