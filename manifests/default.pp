@@ -3,14 +3,13 @@
 #
 # Installs puppetmaster and puppet dependencies on vagrant instances. 
 
-# Change to your domain
-$DOMAIN = "chariotsolutions.com"
 
-$hosts = "192.168.100.100 puppetmaster puppetmaster.${DOMAIN}
-192.168.100.101 puppetclient1 puppetclient1.${DOMAIN}
-192.168.100.102 puppetclient2 puppetclient2.${DOMAIN}
-192.168.100.103 puppetclient3 puppetclient3.${DOMAIN}
-192.168.100.104 puppetclient4 puppetclient4.${DOMAIN}
+
+$hosts = "192.168.100.100 puppetmaster
+192.168.100.101 puppetclient1
+192.168.100.102 puppetclient2
+192.168.100.103 puppetclient3
+192.168.100.104 puppetclient4
 "
 
 # Get some distro specific names and packages. 
@@ -59,15 +58,24 @@ file { "/etc/hosts":
 	content		=> "${hosts}",
 }
 
-exec { '/etc/resolve.conf':
-	command		=> "echo -e 'search ${DOMAIN}\ndomain ${DOMAIN}' >> /etc/resolv.conf",
-	path 		=> "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+file { "/root/.ssh":
+	ensure		=> directory,
+	mode		=> 700,
 }
+
+file { "/root/.ssh/authorized_keys":
+	ensure 		=> present,
+	mode 		=> 600,
+	content		=> "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC90YHXnRFtTTLkdqdpnD1CxxrOSC/2V+iU9RuUtcPjHZESzSv8EFLgEft08BRfwKuKju69FvVt2H3VRdJqxRh5KGyV2JYpwp77wUNvFrX3hOjiRWqclfTNgdRxq4CUaoKZF3eDoPSeOmRdco0xrJDY4653961EzyKbP/l9NnoSK3E+2J1Zwe66ccgprCerAnDpRd594RPfc0yFqMX/1tyBv7010vy68PYS9xKwybZdyQoXdKSNDL5U4Nqfy9k/pws7yJ/MfTBts5+HIL1Ee4QNwrUgzPdjLX9Hooh6U7GsxWbWndWxiB3EATeCRNUvrzejwDYRdfGAHCKrwLHWbMLv drogers@sysadmin",
+	require		=> File[ "/root/.ssh" ],
+}
+
+
 # If the VM is the puppetmaster, install puppetmaster packages and files.
 if $hostname == "puppetmaster" {
 	package { "puppetmaster":
 		ensure 	=> present,
-		require	=> [ File[ '/etc/hosts' ],  Exec[ '/etc/resolve.conf' ], ]
+		require	=> File[ '/etc/hosts' ]
 	}
 	# Define auto signing to all client machines.
 	file { "/etc/puppet/autosign.conf":
@@ -76,7 +84,7 @@ if $hostname == "puppetmaster" {
 		owner	=> 'root',
 		group	=> 'root',
 		require	=> Package[ 'puppetmaster' ],
-		content	=> "*.${DOMAIN}",
+		content	=> "*",
 	}
 	service { 'puppetmaster':
 		enable 		=> true,
@@ -91,8 +99,8 @@ if $hostname == "puppetmaster" {
  #If puppet client, connect to puppetmaster once to create key pair.
 else {
 	exec { 'puppetclient':
-		command		=> "puppet agent --server puppetmaster.${DOMAIN} --test",
+		command		=> "puppet agent --server puppetmaster --test",
 		path		=> '/usr/bin:/usr/sbin:/bin:/sbin:/user/local/bin',
-		require		=> [ Package [ 'puppet' ], File[ '/etc/hosts' ], Exec[ '/etc/resolve.conf' ] ],
+		require		=> [ Package [ 'puppet' ], File[ '/etc/hosts' ], ],
 	}
 }
