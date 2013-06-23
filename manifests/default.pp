@@ -63,6 +63,7 @@ file { "/root/.ssh":
 	mode		=> 700,
 }
 
+# A helpful tip would be to add your own ssh public key :)
 file { "/root/.ssh/authorized_keys":
 	ensure 		=> present,
 	mode 		=> 600,
