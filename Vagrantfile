@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
         puppetmaster.vm.box_url      = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
         puppetmaster.vm.hostname     = "puppetmaster"
         puppetmaster.vm.network :private_network, ip: "192.168.100.100"
+	puppetmaster.vm.network :forwarded_port, id: 'puppetmaster', guest: 8140, host: 8140
 	puppetmaster.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 2200
    end
 

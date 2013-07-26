@@ -14,32 +14,15 @@ $hosts = "192.168.100.100 puppetmaster
 
 # Get some distro specific names and packages. 
 case $operatingsystem {
-		Ubuntu, debian: {
-			$vim = "vim"
-			package { "build-essential":
-				ensure 	=> present,
-				require	=> Exec [ "apt_update" ],
-			}
+		"Ubuntu", "Debian": {
 			exec { "apt_update":
 			    command         => "apt-get update",
 			    path            => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
-				before		=> Package[ 'vim', 'git', 'puppet' ],
-			}
-		}
-		CentOS, Fedora, RedHat: {
-			$vim = "vim-common"
-			exec { "build-essential":
-				command => "yum -y groupinstall \"Development Tools\"",
-				path 	=> "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
+				before		=> Package[ 'git', 'puppet' ],
 			}
 		}
 }
 
-# Sorry I like vim :)
-package { "vim":
-	name 		=> $vim,
-	ensure 		=> present,
-}
 package { 'git':
 	ensure		=> present,
 }
